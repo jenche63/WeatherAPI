@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+</head>
+
+<body>
+<pre>
+<code class="prettyprint"></code>
+{% for d in data.items %}
+{
+    "station_id": "{{d.station_id}}"
+    "date": "{{d.date}}",
+    "max_temp": {{d.max_temp}},
+    "min_temp": {{d.min_temp}},
+    "precipitation": {{d.precipitation}}
+}
+{% endfor %}
+</code>
+</pre>
+</body>
+<!-- Pagination Links-->
+<div class="text-right">
+    <a href="{{ url_for('weather', station_id=station_id, date=date, page=data.prev_num) }}"
+       class="btn btn-outline-dark 
+       {% if data.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+<!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+{% if page_num %}
+<!-- Check for the active page and set the link to "Active"-->
+            {% if data.page == page_num %}
+            <a href="{{ url_for('weather', station_id=station_id, date=date, page=page_num) }}"
+               class="btn btn-success">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('weather', station_id=station_id, date=date, page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('weather', station_id=station_id, date=date, page=data.next_num) }}"
+       class="btn btn-outline-dark 
+       {% if data.page == data.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+<p class="text-right mt-3">
+   Showing page {{ data.page }} of {{ data.pages }}
+</p>
+</html>

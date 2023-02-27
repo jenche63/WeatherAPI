@@ -11,6 +11,7 @@ Inside the answers folder, db.py and db_stats.py are called to generate weather 
 Flask framework are used and app.py inside the answer folder to generate the following GET endpoints:
 
 /api/weather
+
 /api/weather/stats
 
 Inside the templates folder there are weather.html and weather_stat.html, together with the app.py to filter the response by date and station ID (where present) using the query string. Inside the browser, please type the following links to check:
